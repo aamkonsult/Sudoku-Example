@@ -7,17 +7,6 @@ import org.springframework.stereotype.Service;
 @Service("sudokuService")
 public class SudokuServiceImpl implements SudokuService {
 
-//	private static int[][] board =  { 	{7, 0, 0, 0, 4, 0, 5, 3, 0}, 
-//										{0, 0, 5, 0, 0, 8, 0, 1, 0}, 
-//										{0, 0, 8, 5, 0, 9, 0, 4, 0}, 
-//										{5, 3, 9, 0, 6, 0, 0, 0, 1}, 
-//										{0, 0, 0, 0, 1, 0, 0, 0, 5}, 
-//										{8, 0, 0, 7, 2, 0, 9, 0, 0}, 
-//										{9, 0, 7, 4, 0, 0, 0, 0, 0}, 
-//										{0, 0, 0, 0, 5, 7, 0, 0, 0}, 
-//										{6, 0, 0, 0, 0, 0, 0, 5, 0} };
-
-
 	/* Method to check correctness of request
 	 * Check if Sudoku board is of right size, 9x9
 	 * Check if the values of board are allowed, between 0 and 9
@@ -102,17 +91,7 @@ public class SudokuServiceImpl implements SudokuService {
 		}
 
 		board[row][column] = value;
-		
-		// Print
-		System.out.println("Result:");
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				System.out.print(board[i][j] + " ");
-			}
-			System.out.println();
-		}
-
-		
+				
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				if (board[i][j] == 0) {
