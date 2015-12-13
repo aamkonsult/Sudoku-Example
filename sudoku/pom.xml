@@ -7,6 +7,8 @@
   <version>1.0-SNAPSHOT</version>
   <name>sudoku Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  
+  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -15,7 +17,9 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
   <build>
     <finalName>sudoku</finalName>
   </build>
+  
 </project>
