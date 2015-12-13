@@ -59,17 +59,7 @@ public class SudokuServiceImpl implements SudokuService {
 		int row = request.getMoveRow();
 		int column = request.getMoveColumn();
 		int value = request.getMoveValue();
-		
-		// Print
-		System.out.println("Fisrt, Row: " + row + " column: " + column + " value: " + value);
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				System.out.print(board[i][j] + " ");
-			}
-			System.out.println();
-		}
-
-				
+						
 		for (int i = 0; i < 9; i++) {
 			if (row != i && board[i][column] == value) {
 				return new MoveResult(false, i, column);
