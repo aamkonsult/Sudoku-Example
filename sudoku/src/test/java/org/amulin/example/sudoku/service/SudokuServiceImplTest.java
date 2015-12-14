@@ -1,11 +1,13 @@
 package org.amulin.example.sudoku.service;
 
-import static org.junit.Assert.*;
+
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
 import org.amulin.example.sudoku.model.MoveRequest;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonParseException;

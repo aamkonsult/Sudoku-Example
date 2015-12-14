@@ -1,5 +1,11 @@
 package org.amulin.example.sudoku.model;
 
+/**
+ * Move request object
+ * received from FrontEnd
+ * @author amulin
+ *
+ */
 public class MoveRequest {
 	
 	private int[][] sudokuBoard;

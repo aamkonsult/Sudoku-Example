@@ -12,6 +12,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
+/**
+ * Sudoku Rest Controller
+ * Method PUT
+ * HTTP request body as JSON, input object MoveRequest
+ * HTTP response code indicate response status
+ * HTTP response body as JSON, output object MoveResult
+ * @author amulin
+ *
+ */
 @RestController
 public class SudokuRestController {
 	

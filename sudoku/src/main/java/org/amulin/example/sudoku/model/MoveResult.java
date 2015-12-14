@@ -1,10 +1,16 @@
 package org.amulin.example.sudoku.model;
 
+/**
+ * Move result object
+ * to sent to FrondEnd
+ * @author amulin
+ *
+ */
 public class MoveResult {
 	
 	private int[][] board;
 	
-	private boolean isValid;
+	private boolean isValidMove;
 	private int conflictRow;
 	private int conflictColumn;
 	
@@ -13,13 +19,19 @@ public class MoveResult {
 	public MoveResult() {
 	}
 	
+	/**
+	 * Constructor to create response to valid Move
+	 */
 	public MoveResult (int[][] board, boolean isValid, boolean isGameOver) {
-		this.isValid = isValid;
+		this.isValidMove = isValid;
 		this.isGameOver = isGameOver;
 	}
 	
+	/**
+	 * Constructor used to create response to incorrect Move
+	 */
 	public MoveResult(boolean isValid, int conflictRow, int conflictColumn) {
-		this.isValid = isValid;
+		this.isValidMove = isValid;
 		this.conflictRow = conflictRow;
 		this.conflictColumn = conflictColumn;
 	}
@@ -34,10 +46,10 @@ public class MoveResult {
 	}
 	
 	public boolean isValid() {
-		return isValid;
+		return isValidMove;
 	}
 	public void setValid(boolean isValid) {
-		this.isValid = isValid;
+		this.isValidMove = isValid;
 	}
 	public int getConflictRow() {
 		return conflictRow;
