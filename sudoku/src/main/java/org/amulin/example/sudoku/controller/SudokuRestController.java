@@ -3,6 +3,8 @@ package org.amulin.example.sudoku.controller;
 import org.amulin.example.sudoku.model.MoveRequest;
 import org.amulin.example.sudoku.model.MoveResult;
 import org.amulin.example.sudoku.service.SudokuService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SudokuRestController {
 	
+	final static Logger logger = LoggerFactory.getLogger(SudokuRestController.class);
+	
 	@Autowired
 	SudokuService sudokuService;
 		
 	@RequestMapping(value = "/sudoku/", method = RequestMethod.PUT)
 	public ResponseEntity<MoveResult> validateMove(@RequestBody MoveRequest request) {
-		System.out.println("Some request: " + request.toString());
+		logger.info("Some request: {}", request);
 		
 		if (!sudokuService.isAllowedRequest(request)) {
 			return new ResponseEntity<MoveResult>(HttpStatus.BAD_REQUEST);
