@@ -29,6 +29,7 @@ public class SudokuRestController {
 		
 	@RequestMapping(value = "/sudoku/", method = RequestMethod.PUT)
 	public ResponseEntity<MoveResult> validateMove(@RequestBody MoveRequest request) {
+		System.out.println("Some request: " + request.toString());
 		
 		if (!sudokuService.isAllowedRequest(request)) {
 			return new ResponseEntity<MoveResult>(HttpStatus.BAD_REQUEST);
