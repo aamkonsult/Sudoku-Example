@@ -23,6 +23,7 @@ public class MoveResult {
 	 * Constructor to create response to valid Move
 	 */
 	public MoveResult (int[][] board, boolean isValid, boolean isGameOver) {
+		this.board = board;
 		this.isValidMove = isValid;
 		this.isGameOver = isGameOver;
 	}
