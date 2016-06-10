@@ -1,7 +1,9 @@
 package org.amulin.example.sudoku.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,69 +23,89 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring-servlet.xml")
 public class SudokuRestControllerTest {
-	
-	@Autowired
-	private WebApplicationContext webAppContext;
-	
-	private MockMvc mockMvc;
-	
-	@Before
-	public void setup() {
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
-	}
-			
-	@Test
-	public void sudokuRestAppContextTest() {
-		Assert.assertNotNull(webAppContext);
-		Assert.assertNotNull(mockMvc);
-	}
-		
-	@Test
-	public void incorrectRequestTest() throws Exception {
-						
-		mockMvc.perform(
-				put("/sudoku/")
-					.contentType(MediaType.APPLICATION_JSON_VALUE)
-					.content(bad_request))
-					.andExpect(status().isBadRequest());
-	}
 
-	@Test
-	public void conflictRequestTest() throws Exception {
-						
-		mockMvc.perform(
-				put("/sudoku/")
-					.contentType(MediaType.APPLICATION_JSON_VALUE)
-					.content(conflict_request))
-					.andExpect(status().isConflict());
-	}
+    @Autowired
+    private WebApplicationContext webAppContext;
 
-	@Test
-	public void okRequestTest() throws Exception {
-						
-		mockMvc.perform(
-				put("/sudoku/")
-					.contentType(MediaType.APPLICATION_JSON_VALUE)
-					.content(ok_request))
-					.andExpect(status().isOk());
-	}
-	
-	@Test
-	public void secondTimeOkRequestTest() throws Exception {
-						
-		mockMvc.perform(
-				put("/sudoku/")
-					.contentType(MediaType.APPLICATION_JSON_VALUE)
-					.content(second_ok_request))
-					.andExpect(status().isOk());
-	}
+    private MockMvc mockMvc;
+
+    @Before
+    public void setup() {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+    }
+
+    @Test
+    public void sudokuRestAppContextTest() {
+        Assert.assertNotNull(webAppContext);
+        Assert.assertNotNull(mockMvc);
+    }
+
+    @Test
+    public void getBoardTest_boardExist() throws Exception {
+
+        mockMvc.perform(
+                        get("/sudoku/"))
+               .andExpect(status().isOk());
+    }
+
+    @Test
+    public void getBoardTest_boardNotExist() throws Exception {
+
+        mockMvc.perform(
+                        get("/sudoku/").param("boardFile", "fileThatNotExists")).andDo(print())
+               .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void incorrectRequestTest() throws Exception {
+
+        mockMvc.perform(
+                        put("/sudoku/")
+                                       .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                       .content(bad_request))
+               .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void conflictRequestTest() throws Exception {
+
+        mockMvc.perform(
+                        put("/sudoku/")
+                                       .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                       .content(conflict_request))
+               .andExpect(status().isConflict());
+    }
+
+    @Test
+    public void okRequestTest() throws Exception {
+
+        mockMvc.perform(
+                        put("/sudoku/")
+                                       .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                       .content(ok_request))
+               .andExpect(status().isOk());
+    }
+
+    @Test
+    public void secondTimeOkRequestTest() throws Exception {
+
+        mockMvc.perform(
+                        put("/sudoku/")
+                                       .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                       .content(second_ok_request))
+               .andExpect(status().isOk());
+    }
 
 
 
-	final String bad_request = 		"{\"sudokuBoard\":[[7,0,0,0,4,0,5,3,0],[0,0,5,0,0,8,0,1,0],[0,0,8,5,0,9,0,4,0],[5,3,9,0,6,0,0,0,1],[0,0,0,0,1,0,0,0,5],[8,0,0,7,2,0,9,0,0],[9,0,7,4,0,0,0,0,0],[0,0,0,0,5,7,0,0,0],[6,0,0,0,0,0,0,5,0]],\"moveRow\":2,\"moveColumn\":1,\"moveValue\":10}";	
-	final String conflict_request = "{\"sudokuBoard\":[[7,0,0,0,4,0,5,3,0],[0,0,5,0,0,8,0,1,0],[0,0,8,5,0,9,0,4,0],[5,3,9,0,6,0,0,0,1],[0,0,0,0,1,0,0,0,5],[8,0,0,7,2,0,9,0,0],[9,0,7,4,0,0,0,0,0],[0,0,0,0,5,7,0,0,0],[6,0,0,0,0,0,0,5,0]],\"moveRow\":2,\"moveColumn\":1,\"moveValue\":7}";	
-	final String ok_request = 		"{\"sudokuBoard\":[[7,0,0,0,4,0,5,3,0],[0,0,5,0,0,8,0,1,0],[0,0,8,5,0,9,0,4,0],[5,3,9,0,6,0,0,0,1],[0,0,0,0,1,0,0,0,5],[8,0,0,7,2,0,9,0,0],[9,0,7,4,0,0,0,0,0],[0,0,0,0,5,7,0,0,0],[6,0,0,0,0,0,0,5,0]],\"moveRow\":2,\"moveColumn\":1,\"moveValue\":1}";	
-	final String second_ok_request = 		"{\"sudokuBoard\":[[7,0,0,0,4,0,5,3,9],[0,0,5,0,0,8,0,1,0],[0,0,8,5,0,9,0,4,0],[5,3,9,0,6,0,0,0,1],[0,0,0,0,1,0,0,0,5],[8,0,0,7,2,0,9,0,0],[9,0,7,4,0,0,0,0,0],[0,0,0,0,5,7,0,0,0],[6,0,0,0,0,0,0,5,0]],\"moveRow\":2,\"moveColumn\":1,\"moveValue\":1}";	
+    final String bad_request =
+            "{\"sudokuBoard\":[[7,0,0,0,4,0,5,3,0],[0,0,5,0,0,8,0,1,0],[0,0,8,5,0,9,0,4,0],[5,3,9,0,6,0,0,0,1],[0,0,0,0,1,0,0,0,5],[8,0,0,7,2,0,9,0,0],[9,0,7,4,0,0,0,0,0],[0,0,0,0,5,7,0,0,0],[6,0,0,0,0,0,0,5,0]],\"moveRow\":2,\"moveColumn\":1,\"moveValue\":10}";
+    final String conflict_request =
+            "{\"sudokuBoard\":[[7,0,0,0,4,0,5,3,0],[0,0,5,0,0,8,0,1,0],[0,0,8,5,0,9,0,4,0],[5,3,9,0,6,0,0,0,1],[0,0,0,0,1,0,0,0,5],[8,0,0,7,2,0,9,0,0],[9,0,7,4,0,0,0,0,0],[0,0,0,0,5,7,0,0,0],[6,0,0,0,0,0,0,5,0]],\"moveRow\":2,\"moveColumn\":1,\"moveValue\":7}";
+    final String ok_request =
+            "{\"sudokuBoard\":[[7,0,0,0,4,0,5,3,0],[0,0,5,0,0,8,0,1,0],[0,0,8,5,0,9,0,4,0],[5,3,9,0,6,0,0,0,1],[0,0,0,0,1,0,0,0,5],[8,0,0,7,2,0,9,0,0],[9,0,7,4,0,0,0,0,0],[0,0,0,0,5,7,0,0,0],[6,0,0,0,0,0,0,5,0]],\"moveRow\":2,\"moveColumn\":1,\"moveValue\":1}";
+    final String second_ok_request =
+            "{\"sudokuBoard\":[[7,0,0,0,4,0,5,3,9],[0,0,5,0,0,8,0,1,0],[0,0,8,5,0,9,0,4,0],[5,3,9,0,6,0,0,0,1],[0,0,0,0,1,0,0,0,5],[8,0,0,7,2,0,9,0,0],[9,0,7,4,0,0,0,0,0],[0,0,0,0,5,7,0,0,0],[6,0,0,0,0,0,0,5,0]],\"moveRow\":2,\"moveColumn\":1,\"moveValue\":1}";
 
-	
+
 }
