@@ -10,6 +10,12 @@ import org.example.taxes.service.StatisticalReporter;
 
 public class TaxReporterFacade {
 
+    public void reportAll(TaxReport report) {
+        this.reportIncome(report);
+        this.reportSocial(report);
+        this.reportStatistics(report);
+    }
+
     public void reportIncome(TaxReport report) {
         TaxDepartmentReport taxReport = new TaxDepartmentReport(report);
         taxReport.setBankReferenceNumber("12345");

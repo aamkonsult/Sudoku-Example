@@ -10,9 +10,11 @@ public class ClientWithFacade {
 
         TaxReporterFacade taxFacade = new TaxReporterFacade();
 
-        taxFacade.reportIncome(lastMontReport);
-        taxFacade.reportSocial(lastMontReport);
-        taxFacade.reportStatistics(lastMontReport);
+        taxFacade.reportAll(lastMontReport);
+
+        //        taxFacade.reportIncome(lastMontReport);
+        //        taxFacade.reportSocial(lastMontReport);
+        //        taxFacade.reportStatistics(lastMontReport);
     }
 
 }
